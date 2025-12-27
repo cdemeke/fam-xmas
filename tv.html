@@ -294,6 +294,63 @@
             0%, 100% { background: inherit; }
             50% { background: rgba(248, 178, 41, 0.3); }
         }
+
+        /* Fullscreen Button */
+        .fullscreen-btn {
+            position: fixed;
+            bottom: 2vh;
+            left: 2vw;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 1.5vh 2vw;
+            border-radius: 1vh;
+            cursor: pointer;
+            font-size: 2vh;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 1vw;
+            transition: all 0.2s;
+            z-index: 100;
+        }
+
+        .fullscreen-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .fullscreen-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Hide button in actual fullscreen */
+        :fullscreen .fullscreen-btn,
+        :-webkit-full-screen .fullscreen-btn {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Show exit hint on hover in fullscreen */
+        :fullscreen::after,
+        :-webkit-full-screen::after {
+            content: 'Press ESC to exit fullscreen';
+            position: fixed;
+            bottom: 2vh;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 1vh 2vw;
+            border-radius: 1vh;
+            font-size: 1.5vh;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        :fullscreen:hover::after,
+        :-webkit-full-screen:hover::after {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -317,6 +374,11 @@
         <div class="sync-dot"></div>
         <span>Live • Auto-updating</span>
     </div>
+
+    <!-- Fullscreen Button -->
+    <button class="fullscreen-btn" id="fullscreenBtn" onclick="toggleFullscreen()">
+        <span id="fullscreenIcon">⛶</span> Fullscreen
+    </button>
 
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -489,6 +551,41 @@
                     }
                 });
                 document.querySelector('.sync-status span').textContent = 'Live • Same-device sync';
+            }
+        }
+
+        // Fullscreen toggle
+        function toggleFullscreen() {
+            if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+                // Enter fullscreen
+                const elem = document.documentElement;
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen();
+                } else if (elem.webkitRequestFullscreen) {
+                    elem.webkitRequestFullscreen(); // Safari/iOS
+                }
+            } else {
+                // Exit fullscreen
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                }
+            }
+        }
+
+        // Update button text based on fullscreen state
+        document.addEventListener('fullscreenchange', updateFullscreenButton);
+        document.addEventListener('webkitfullscreenchange', updateFullscreenButton);
+
+        function updateFullscreenButton() {
+            const btn = document.getElementById('fullscreenBtn');
+            const icon = document.getElementById('fullscreenIcon');
+            if (document.fullscreenElement || document.webkitFullscreenElement) {
+                icon.textContent = '⛶';
+                btn.innerHTML = '<span>⛶</span> Exit Fullscreen';
+            } else {
+                btn.innerHTML = '<span>⛶</span> Fullscreen';
             }
         }
 
