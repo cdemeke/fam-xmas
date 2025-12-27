@@ -1,0 +1,1678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demeke Family Xmas Games 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #f8f9fa;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --border-color: rgba(0, 0, 0, 0.08);
+            --text-primary: #1a1a2e;
+            --text-secondary: rgba(0, 0, 0, 0.55);
+            --accent-red: #dc2626;
+            --accent-green: #059669;
+            --accent-gold: #d97706;
+            --accent-blue: #2563eb;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            min-height: 100vh;
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Subtle Snowfall */
+        .snowflakes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -50px;
+            font-size: 1.5rem;
+            opacity: 0.7;
+            animation: fall linear infinite;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #165B33 0%, #146B3A 30%, #BB2528 70%, #A71E23 100%);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 4px solid #F8B229;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            font-family: 'Mountains of Christmas', cursive;
+            letter-spacing: 0.02em;
+            position: relative;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            color: #ffffff;
+        }
+
+        .header-subtitle {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+            font-weight: 500;
+            position: relative;
+            color: #F8B229;
+        }
+
+        /* Navigation */
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: inherit;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .nav-btn.active {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            border-color: var(--text-primary);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-header h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .card-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .card-icon.gold { background: #fef3c7; }
+        .card-icon.green { background: #d1fae5; }
+        .card-icon.red { background: #fee2e2; }
+        .card-icon.blue { background: #dbeafe; }
+
+        /* Leaderboard */
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            background: #f8f9fa;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .leaderboard-item:hover {
+            background: #f1f5f9;
+        }
+
+        .leaderboard-item.gold {
+            background: linear-gradient(90deg, rgba(244, 162, 97, 0.1) 0%, transparent 100%);
+            border-color: rgba(244, 162, 97, 0.2);
+        }
+
+        .leaderboard-item.silver {
+            background: linear-gradient(90deg, rgba(192, 192, 192, 0.1) 0%, transparent 100%);
+            border-color: rgba(192, 192, 192, 0.2);
+        }
+
+        .leaderboard-item.bronze {
+            background: linear-gradient(90deg, rgba(205, 127, 50, 0.1) 0%, transparent 100%);
+            border-color: rgba(205, 127, 50, 0.2);
+        }
+
+        .rank {
+            font-size: 1.25rem;
+            font-weight: 600;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e5e7eb;
+            border-radius: 12px;
+            flex-shrink: 0;
+        }
+
+        .rank.top { background: #fef3c7; }
+
+        .player-info {
+            flex: 1;
+            padding: 0 1rem;
+        }
+
+        .player-name {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .player-wins {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        .player-score {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+        }
+
+        .player-score span {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            background: #f8f9fa;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: all 0.2s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            background: #ffffff;
+        }
+
+        input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        select option {
+            background: #ffffff;
+            color: var(--text-primary);
+        }
+
+        .input-row {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .input-row input {
+            flex: 1;
+        }
+
+        .btn {
+            background: var(--accent-green);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .btn:hover {
+            filter: brightness(1.1);
+            transform: translateY(-1px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-danger {
+            background: var(--accent-red);
+        }
+
+        .btn-primary {
+            background: var(--accent-gold);
+            color: var(--bg-primary);
+        }
+
+        .btn-secondary {
+            background: #e5e7eb;
+            color: var(--text-primary);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        /* Player Grid */
+        .player-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .player-card {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+            position: relative;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+
+        .player-card:hover {
+            background: #f1f5f9;
+        }
+
+        .player-card .avatar {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent-red), var(--accent-gold));
+            border-radius: 50%;
+            margin: 0 auto 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .player-card .name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .player-card .score {
+            font-size: 0.8rem;
+            color: var(--accent-gold);
+        }
+
+        .player-card .delete-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(230, 57, 70, 0.2);
+            color: var(--accent-red);
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .player-card:hover .delete-btn {
+            opacity: 1;
+        }
+
+        /* History */
+        .history-item {
+            padding: 1rem;
+            margin: 0.5rem 0;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border-left: 3px solid var(--accent-gold);
+        }
+
+        .history-item .game-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .history-item .placements {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .history-item .timestamp {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            opacity: 0.7;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            max-width: 380px;
+            width: 90%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .modal-content h2 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-content p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .pin-input {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .pin-input input {
+            width: 56px;
+            height: 64px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            border-radius: 12px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+        }
+
+        .pin-hint {
+            margin-top: 1.5rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            opacity: 0.6;
+        }
+
+        /* TV Mode */
+        .tv-mode {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            z-index: 999;
+            display: none;
+            overflow: auto;
+        }
+
+        .tv-mode.active {
+            display: block;
+        }
+
+        .tv-mode .header h1 {
+            font-size: 4rem;
+            font-family: 'Mountains of Christmas', cursive;
+        }
+
+        .tv-mode .header-subtitle {
+            font-size: 1.25rem;
+        }
+
+        .tv-mode .leaderboard-item {
+            padding: 1.5rem 2rem;
+            margin: 0.75rem 0;
+            border-radius: 16px;
+        }
+
+        .tv-mode .rank {
+            font-size: 2.5rem;
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+        }
+
+        .tv-mode .player-name {
+            font-size: 2rem;
+        }
+
+        .tv-mode .player-wins {
+            font-size: 1rem;
+        }
+
+        .tv-mode .player-score {
+            font-size: 3rem;
+        }
+
+        .tv-mode .player-score span {
+            font-size: 1.25rem;
+        }
+
+        .tv-mode .close-tv {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 3001;
+        }
+
+        .tv-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* TV Reveal Animation */
+        .tv-reveal {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #165B33 0%, #0d3320 100%);
+            position: relative;
+        }
+
+        .reveal-content {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .reveal-title {
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: 3rem;
+            color: #F8B229;
+            margin-bottom: 2rem;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.02); }
+        }
+
+        .reveal-place {
+            font-size: 8rem;
+            margin: 1rem 0;
+            animation: bounceIn 0.6s ease-out;
+        }
+
+        .reveal-name {
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: 5rem;
+            color: #ffffff;
+            margin: 1rem 0;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .reveal-score {
+            font-size: 2rem;
+            color: #F8B229;
+            margin-top: 1rem;
+            animation: fadeInUp 0.6s ease-out 0.3s both;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            0% { transform: translateY(50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            0% { transform: translateY(20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .reveal-drumroll {
+            font-size: 4rem;
+            animation: shake 0.3s ease-in-out infinite;
+            margin-top: 2rem;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .reveal-drumroll.hidden {
+            display: none;
+        }
+
+        /* Winner crown effect for 1st place */
+        .reveal-winner {
+            position: relative;
+        }
+
+        .reveal-winner::before {
+            content: '👑';
+            position: absolute;
+            top: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 5rem;
+            animation: crownDrop 0.5s ease-out;
+        }
+
+        @keyframes crownDrop {
+            0% { transform: translateX(-50%) translateY(-50px); opacity: 0; }
+            100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+        }
+
+        .tv-full {
+            animation: fadeIn 1s ease-out;
+        }
+
+        /* Skip button */
+        .skip-reveal {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3002;
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .skip-reveal:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Celebration */
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 4000;
+            display: none;
+        }
+
+        .celebration.active {
+            display: block;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            animation: confetti-fall 3s ease-out forwards;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-state p {
+            font-size: 0.95rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .nav {
+                gap: 0.375rem;
+                padding: 0.75rem;
+            }
+
+            .nav-btn {
+                padding: 0.5rem 0.875rem;
+                font-size: 0.8rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .card {
+                padding: 1.25rem;
+            }
+
+            .player-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+
+            .tv-mode .header h1 {
+                font-size: 2rem;
+            }
+
+            .tv-mode .player-name {
+                font-size: 1.25rem;
+            }
+
+            .tv-mode .player-score {
+                font-size: 1.75rem;
+            }
+
+            .tv-mode .rank {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="snowflakes" id="snowflakes"></div>
+    <div class="celebration" id="celebration"></div>
+
+    <!-- PIN Modal -->
+    <div class="modal" id="pinModal">
+        <div class="modal-content">
+            <h2>Admin Access</h2>
+            <p>Enter the 4-digit PIN to continue</p>
+            <div class="pin-input">
+                <input type="password" maxlength="1" class="pin-digit" data-index="0">
+                <input type="password" maxlength="1" class="pin-digit" data-index="1">
+                <input type="password" maxlength="1" class="pin-digit" data-index="2">
+                <input type="password" maxlength="1" class="pin-digit" data-index="3">
+            </div>
+            <p id="pinError" style="color: var(--accent-red); display: none; margin-bottom: 1rem;">Incorrect PIN</p>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" onclick="closePinModal()">Cancel</button>
+                <button class="btn" onclick="verifyPin()">Continue</button>
+            </div>
+            <p class="pin-hint">Default PIN: 1225</p>
+        </div>
+    </div>
+
+    <!-- Set PIN Modal -->
+    <div class="modal" id="setPinModal">
+        <div class="modal-content">
+            <h2>Change PIN</h2>
+            <p>Enter your current and new PIN</p>
+            <div class="form-group" style="text-align: left;">
+                <label>Current PIN</label>
+                <input type="password" id="currentPinInput" maxlength="4" placeholder="Enter current PIN">
+            </div>
+            <div class="form-group" style="text-align: left;">
+                <label>New PIN</label>
+                <input type="password" id="newPinInput" maxlength="4" placeholder="Enter new PIN">
+            </div>
+            <p id="setPinError" style="color: var(--accent-red); display: none; margin-bottom: 1rem;"></p>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" onclick="closeSetPinModal()">Cancel</button>
+                <button class="btn" onclick="saveNewPin()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <h1>Demeke Family Xmas Games 2025</h1>
+        <p class="header-subtitle">Track scores and crown the champion</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <button class="nav-btn active" onclick="showSection('leaderboard')">Leaderboard</button>
+        <button class="nav-btn" onclick="showSection('history')">History</button>
+        <button class="nav-btn" onclick="showAdminSection()">Admin</button>
+        <button class="nav-btn" onclick="openTvMode()">TV Mode</button>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Leaderboard Section -->
+        <section id="leaderboard" class="section active">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon gold">🏆</div>
+                    <h2>Leaderboard</h2>
+                </div>
+                <div id="leaderboardList"></div>
+            </div>
+        </section>
+
+        <!-- History Section -->
+        <section id="history" class="section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon blue">📋</div>
+                    <h2>Game History</h2>
+                </div>
+                <div id="historyList"></div>
+            </div>
+        </section>
+
+        <!-- Admin Section -->
+        <section id="admin" class="section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon green">👥</div>
+                    <h2>Players</h2>
+                </div>
+                <div class="form-group">
+                    <label>Add new player</label>
+                    <div class="input-row">
+                        <input type="text" id="playerName" placeholder="Enter name...">
+                        <button class="btn" onclick="addPlayer()">Add</button>
+                    </div>
+                </div>
+                <div class="player-grid" id="playerList"></div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon gold">🎯</div>
+                    <h2>Record Game</h2>
+                </div>
+                <div class="form-group">
+                    <label>Game name</label>
+                    <input type="text" id="gameName" placeholder="e.g., Christmas Trivia">
+                </div>
+                <div class="form-group">
+                    <label>1st Place — 3 points</label>
+                    <select id="firstPlace">
+                        <option value="">Select player...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>2nd Place — 2 points</label>
+                    <select id="secondPlace">
+                        <option value="">Select player...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>3rd Place — 1 point</label>
+                    <select id="thirdPlace">
+                        <option value="">Select player...</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" onclick="recordGame()" style="width: 100%;">Record Game</button>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon red">⚙️</div>
+                    <h2>Settings</h2>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="openSetPinModal()">Change PIN</button>
+                    <button class="btn btn-danger" onclick="resetAllData()">Reset Data</button>
+                    <button class="btn btn-secondary" onclick="exitAdmin()">Exit Admin</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- TV Mode -->
+    <div class="tv-mode" id="tvMode">
+        <button class="btn btn-danger close-tv" onclick="closeTvMode()">Close</button>
+
+        <!-- Reveal Animation -->
+        <div class="tv-reveal" id="tvReveal">
+            <div class="reveal-content">
+                <div class="reveal-title" id="revealTitle">And the winners are...</div>
+                <div class="reveal-place" id="revealPlace"></div>
+                <div class="reveal-name" id="revealName"></div>
+                <div class="reveal-score" id="revealScore"></div>
+            </div>
+            <div class="reveal-drumroll" id="drumroll">🥁 🥁 🥁</div>
+            <button class="skip-reveal" onclick="skipToLeaderboard()">Skip to Leaderboard →</button>
+        </div>
+
+        <!-- Full Leaderboard (shown after reveal) -->
+        <div class="tv-full" id="tvFull" style="display: none;">
+            <header class="header">
+                <h1>Leaderboard</h1>
+                <p class="header-subtitle">Demeke Family Xmas Games 2025</p>
+            </header>
+            <div class="tv-container">
+                <div id="tvLeaderboard"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let gameData = {
+            players: [],
+            games: [],
+            pin: '1225'
+        };
+
+        let isAdmin = false;
+        let audioContext;
+
+        function initAudio() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playSound(type) {
+            initAudio();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            if (type === 'win') {
+                oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime);
+                oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1);
+                oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2);
+                oscillator.frequency.setValueAtTime(1046.50, audioContext.currentTime + 0.3);
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.setValueAtTime(0.01, audioContext.currentTime + 0.5);
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.5);
+            } else if (type === 'click') {
+                oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+                gainNode.gain.setValueAtTime(0.08, audioContext.currentTime);
+                gainNode.gain.setValueAtTime(0.01, audioContext.currentTime + 0.03);
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.03);
+            }
+        }
+
+        function loadData() {
+            const saved = localStorage.getItem('christmasGames');
+            if (saved) {
+                gameData = JSON.parse(saved);
+            }
+            updateUI();
+        }
+
+        function saveData() {
+            localStorage.setItem('christmasGames', JSON.stringify(gameData));
+        }
+
+        function createSnowflakes() {
+            const container = document.getElementById('snowflakes');
+            const emojis = ['❄️', '🎄', '⭐', '🎁', '🔔', '❄️', '✨', '🎅', '☃️', '🦌', '❄️', '🍪'];
+            for (let i = 0; i < 25; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.animationDuration = (Math.random() * 6 + 10) + 's';
+                snowflake.style.animationDelay = Math.random() * 10 + 's';
+                snowflake.style.fontSize = (Math.random() * 1 + 1.2) + 'rem';
+                container.appendChild(snowflake);
+            }
+        }
+
+        function showSection(sectionId) {
+            if (sectionId === 'admin' && !isAdmin) {
+                showPinModal();
+                return;
+            }
+
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+            document.getElementById(sectionId).classList.add('active');
+            event.target.classList.add('active');
+
+            playSound('click');
+        }
+
+        function showAdminSection() {
+            if (!isAdmin) {
+                showPinModal();
+            } else {
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                document.getElementById('admin').classList.add('active');
+                document.querySelectorAll('.nav-btn')[2].classList.add('active');
+            }
+        }
+
+        function showPinModal() {
+            document.getElementById('pinModal').classList.add('active');
+            document.querySelector('.pin-digit[data-index="0"]').focus();
+        }
+
+        function closePinModal() {
+            document.getElementById('pinModal').classList.remove('active');
+            document.querySelectorAll('.pin-digit').forEach(input => input.value = '');
+            document.getElementById('pinError').style.display = 'none';
+        }
+
+        function verifyPin() {
+            const digits = document.querySelectorAll('.pin-digit');
+            const enteredPin = Array.from(digits).map(d => d.value).join('');
+
+            if (enteredPin === gameData.pin) {
+                isAdmin = true;
+                closePinModal();
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                document.getElementById('admin').classList.add('active');
+                document.querySelectorAll('.nav-btn')[2].classList.add('active');
+                playSound('win');
+            } else {
+                document.getElementById('pinError').style.display = 'block';
+                document.querySelectorAll('.pin-digit').forEach(input => input.value = '');
+                document.querySelector('.pin-digit[data-index="0"]').focus();
+            }
+        }
+
+        document.querySelectorAll('.pin-digit').forEach(input => {
+            input.addEventListener('input', (e) => {
+                const index = parseInt(e.target.dataset.index);
+                if (e.target.value && index < 3) {
+                    document.querySelector(`.pin-digit[data-index="${index + 1}"]`).focus();
+                }
+                if (index === 3 && e.target.value) {
+                    verifyPin();
+                }
+            });
+
+            input.addEventListener('keydown', (e) => {
+                const index = parseInt(e.target.dataset.index);
+                if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                    document.querySelector(`.pin-digit[data-index="${index - 1}"]`).focus();
+                }
+            });
+        });
+
+        function openSetPinModal() {
+            document.getElementById('setPinModal').classList.add('active');
+        }
+
+        function closeSetPinModal() {
+            document.getElementById('setPinModal').classList.remove('active');
+            document.getElementById('currentPinInput').value = '';
+            document.getElementById('newPinInput').value = '';
+            document.getElementById('setPinError').style.display = 'none';
+        }
+
+        function saveNewPin() {
+            const currentPin = document.getElementById('currentPinInput').value;
+            const newPin = document.getElementById('newPinInput').value;
+            const errorEl = document.getElementById('setPinError');
+
+            if (currentPin !== gameData.pin) {
+                errorEl.textContent = 'Current PIN is incorrect';
+                errorEl.style.display = 'block';
+                return;
+            }
+
+            if (newPin.length !== 4 || !/^\d+$/.test(newPin)) {
+                errorEl.textContent = 'PIN must be 4 digits';
+                errorEl.style.display = 'block';
+                return;
+            }
+
+            gameData.pin = newPin;
+            saveData();
+            closeSetPinModal();
+        }
+
+        function exitAdmin() {
+            isAdmin = false;
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('leaderboard').classList.add('active');
+            document.querySelector('.nav-btn').classList.add('active');
+        }
+
+        function addPlayer() {
+            const name = document.getElementById('playerName').value.trim();
+            if (!name) return;
+
+            if (gameData.players.find(p => p.name.toLowerCase() === name.toLowerCase())) {
+                alert('Player already exists!');
+                return;
+            }
+
+            gameData.players.push({
+                name: name,
+                score: 0,
+                wins: 0
+            });
+
+            document.getElementById('playerName').value = '';
+            saveData();
+            updateUI();
+            playSound('click');
+        }
+
+        function deletePlayer(name) {
+            if (!confirm(`Remove ${name}?`)) return;
+            gameData.players = gameData.players.filter(p => p.name !== name);
+            saveData();
+            updateUI();
+        }
+
+        function recordGame() {
+            const gameName = document.getElementById('gameName').value.trim();
+            const first = document.getElementById('firstPlace').value;
+            const second = document.getElementById('secondPlace').value;
+            const third = document.getElementById('thirdPlace').value;
+
+            if (!gameName) {
+                alert('Please enter a game name');
+                return;
+            }
+
+            if (!first) {
+                alert('Please select at least 1st place');
+                return;
+            }
+
+            const selected = [first, second, third].filter(Boolean);
+            if (new Set(selected).size !== selected.length) {
+                alert('Each player can only have one placement!');
+                return;
+            }
+
+            if (first) {
+                const player = gameData.players.find(p => p.name === first);
+                if (player) {
+                    player.score += 3;
+                    player.wins += 1;
+                }
+            }
+            if (second) {
+                const player = gameData.players.find(p => p.name === second);
+                if (player) player.score += 2;
+            }
+            if (third) {
+                const player = gameData.players.find(p => p.name === third);
+                if (player) player.score += 1;
+            }
+
+            gameData.games.push({
+                name: gameName,
+                first: first,
+                second: second || null,
+                third: third || null,
+                timestamp: new Date().toISOString()
+            });
+
+            document.getElementById('gameName').value = '';
+            document.getElementById('firstPlace').value = '';
+            document.getElementById('secondPlace').value = '';
+            document.getElementById('thirdPlace').value = '';
+
+            saveData();
+            updateUI();
+
+            playSound('win');
+            showCelebration();
+        }
+
+        function showCelebration() {
+            const container = document.getElementById('celebration');
+            container.classList.add('active');
+            container.innerHTML = '';
+
+            const colors = ['#e63946', '#2a9d8f', '#f4a261', '#4895ef', '#9b5de5'];
+
+            for (let i = 0; i < 80; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                container.appendChild(confetti);
+            }
+
+            setTimeout(() => {
+                container.classList.remove('active');
+            }, 3000);
+        }
+
+        function resetAllData() {
+            if (!confirm('Reset all data? This cannot be undone.')) return;
+            if (!confirm('Are you sure?')) return;
+
+            gameData = {
+                players: [],
+                games: [],
+                pin: gameData.pin
+            };
+            saveData();
+            updateUI();
+        }
+
+        function updateUI() {
+            updateLeaderboard();
+            updatePlayerList();
+            updatePlayerSelects();
+            updateHistory();
+            updateTvLeaderboard();
+        }
+
+        function updateLeaderboard() {
+            const container = document.getElementById('leaderboardList');
+            const sorted = [...gameData.players].sort((a, b) => b.score - a.score);
+
+            if (sorted.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">🎄</div>
+                        <p>No players yet. Add players in the Admin panel to get started.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = sorted.map((player, index) => {
+                let rankClass = '';
+                let rankIcon = index + 1;
+
+                if (index === 0) { rankClass = 'gold'; rankIcon = '🥇'; }
+                else if (index === 1) { rankClass = 'silver'; rankIcon = '🥈'; }
+                else if (index === 2) { rankClass = 'bronze'; rankIcon = '🥉'; }
+
+                return `
+                    <div class="leaderboard-item ${rankClass}">
+                        <div class="rank ${index < 3 ? 'top' : ''}">${rankIcon}</div>
+                        <div class="player-info">
+                            <div class="player-name">${player.name}</div>
+                            <div class="player-wins">${player.wins} win${player.wins !== 1 ? 's' : ''}</div>
+                        </div>
+                        <div class="player-score">${player.score} <span>pts</span></div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateTvLeaderboard() {
+            const container = document.getElementById('tvLeaderboard');
+            const sorted = [...gameData.players].sort((a, b) => b.score - a.score);
+
+            if (sorted.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state" style="font-size: 1.5rem;">
+                        <div class="icon" style="font-size: 5rem;">🎄</div>
+                        <p>Waiting for players...</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = sorted.map((player, index) => {
+                let rankClass = '';
+                let rankIcon = index + 1;
+
+                if (index === 0) { rankClass = 'gold'; rankIcon = '🥇'; }
+                else if (index === 1) { rankClass = 'silver'; rankIcon = '🥈'; }
+                else if (index === 2) { rankClass = 'bronze'; rankIcon = '🥉'; }
+
+                return `
+                    <div class="leaderboard-item ${rankClass}">
+                        <div class="rank ${index < 3 ? 'top' : ''}">${rankIcon}</div>
+                        <div class="player-info">
+                            <div class="player-name">${player.name}</div>
+                            <div class="player-wins">${player.wins} win${player.wins !== 1 ? 's' : ''}</div>
+                        </div>
+                        <div class="player-score">${player.score} <span>pts</span></div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updatePlayerList() {
+            const container = document.getElementById('playerList');
+
+            if (gameData.players.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-secondary); text-align: center; padding: 1rem;">No players added yet</p>';
+                return;
+            }
+
+            container.innerHTML = gameData.players.map(player => `
+                <div class="player-card">
+                    <button class="delete-btn" onclick="deletePlayer('${player.name}')">✕</button>
+                    <div class="avatar">${player.name.charAt(0).toUpperCase()}</div>
+                    <div class="name">${player.name}</div>
+                    <div class="score">${player.score} pts</div>
+                </div>
+            `).join('');
+        }
+
+        function updatePlayerSelects() {
+            const selects = ['firstPlace', 'secondPlace', 'thirdPlace'];
+            const options = gameData.players.map(p =>
+                `<option value="${p.name}">${p.name}</option>`
+            ).join('');
+
+            selects.forEach(id => {
+                const select = document.getElementById(id);
+                const current = select.value;
+                select.innerHTML = `<option value="">Select player...</option>${options}`;
+                select.value = current;
+            });
+        }
+
+        function updateHistory() {
+            const container = document.getElementById('historyList');
+
+            if (gameData.games.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">📋</div>
+                        <p>No games played yet</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const reversed = [...gameData.games].reverse();
+            container.innerHTML = reversed.map(game => {
+                const date = new Date(game.timestamp);
+                const timeStr = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                let placements = [];
+                if (game.first) placements.push(`🥇 ${game.first}`);
+                if (game.second) placements.push(`🥈 ${game.second}`);
+                if (game.third) placements.push(`🥉 ${game.third}`);
+
+                return `
+                    <div class="history-item">
+                        <div class="game-name">${game.name}</div>
+                        <div class="placements">${placements.join(' · ')}</div>
+                        <div class="timestamp">${timeStr}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        let revealTimeout = null;
+        let skipReveal = false;
+
+        function openTvMode() {
+            document.getElementById('tvMode').classList.add('active');
+            playSound('click');
+            skipReveal = false;
+            startRevealSequence();
+        }
+
+        function closeTvMode() {
+            document.getElementById('tvMode').classList.remove('active');
+            // Reset reveal state
+            skipReveal = true;
+            if (revealTimeout) clearTimeout(revealTimeout);
+            document.getElementById('tvReveal').style.display = 'flex';
+            document.getElementById('tvFull').style.display = 'none';
+            document.getElementById('revealPlace').textContent = '';
+            document.getElementById('revealName').textContent = '';
+            document.getElementById('revealName').className = 'reveal-name';
+            document.getElementById('revealScore').textContent = '';
+            document.getElementById('drumroll').classList.remove('hidden');
+            document.getElementById('revealTitle').textContent = 'And the winners are...';
+        }
+
+        function playDrumroll() {
+            initAudio();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            oscillator.type = 'triangle';
+            oscillator.frequency.setValueAtTime(150, audioContext.currentTime);
+            gainNode.gain.setValueAtTime(0.15, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.8);
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.8);
+        }
+
+        function playRevealSound() {
+            initAudio();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(800, audioContext.currentTime + 0.15);
+            gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.3);
+        }
+
+        function playWinnerFanfare() {
+            initAudio();
+            const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51];
+            notes.forEach((freq, i) => {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                oscillator.frequency.setValueAtTime(freq, audioContext.currentTime + i * 0.12);
+                gainNode.gain.setValueAtTime(0.25, audioContext.currentTime + i * 0.12);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + i * 0.12 + 0.4);
+                oscillator.start(audioContext.currentTime + i * 0.12);
+                oscillator.stop(audioContext.currentTime + i * 0.12 + 0.4);
+            });
+        }
+
+        function startRevealSequence() {
+            const sorted = [...gameData.players].sort((a, b) => b.score - a.score);
+
+            if (sorted.length < 1) {
+                // No players, show full leaderboard immediately
+                showFullLeaderboard();
+                return;
+            }
+
+            const revealEl = document.getElementById('tvReveal');
+            const drumrollEl = document.getElementById('drumroll');
+            const titleEl = document.getElementById('revealTitle');
+            const placeEl = document.getElementById('revealPlace');
+            const nameEl = document.getElementById('revealName');
+            const scoreEl = document.getElementById('revealScore');
+
+            // Reset state
+            revealEl.style.display = 'flex';
+            document.getElementById('tvFull').style.display = 'none';
+            placeEl.textContent = '';
+            nameEl.textContent = '';
+            nameEl.className = 'reveal-name';
+            scoreEl.textContent = '';
+            drumrollEl.classList.remove('hidden');
+            titleEl.textContent = 'And the winners are...';
+
+            let delay = 0;
+
+            // Show 3rd place (if exists)
+            if (sorted.length >= 3) {
+                delay += 2500;
+                revealTimeout = setTimeout(() => {
+                    if (skipReveal) return;
+                    playDrumroll();
+                }, delay - 800);
+
+                revealTimeout = setTimeout(() => {
+                    if (skipReveal) return;
+                    drumrollEl.classList.add('hidden');
+                    titleEl.textContent = 'In 3rd Place...';
+                    playRevealSound();
+                    placeEl.textContent = '🥉';
+                    placeEl.style.animation = 'none';
+                    placeEl.offsetHeight; // Trigger reflow
+                    placeEl.style.animation = 'bounceIn 0.6s ease-out';
+
+                    setTimeout(() => {
+                        if (skipReveal) return;
+                        nameEl.textContent = sorted[2].name;
+                        nameEl.style.animation = 'none';
+                        nameEl.offsetHeight;
+                        nameEl.style.animation = 'slideUp 0.8s ease-out';
+                        scoreEl.textContent = `${sorted[2].score} points`;
+                    }, 600);
+                }, delay);
+                delay += 3500;
+            }
+
+            // Show 2nd place (if exists)
+            if (sorted.length >= 2) {
+                revealTimeout = setTimeout(() => {
+                    if (skipReveal) return;
+                    drumrollEl.classList.remove('hidden');
+                    placeEl.textContent = '';
+                    nameEl.textContent = '';
+                    scoreEl.textContent = '';
+                    playDrumroll();
+                }, delay);
+                delay += 1500;
+
+                revealTimeout = setTimeout(() => {
+                    if (skipReveal) return;
+                    drumrollEl.classList.add('hidden');
+                    titleEl.textContent = 'In 2nd Place...';
+                    playRevealSound();
+                    placeEl.textContent = '🥈';
+                    placeEl.style.animation = 'none';
+                    placeEl.offsetHeight;
+                    placeEl.style.animation = 'bounceIn 0.6s ease-out';
+
+                    setTimeout(() => {
+                        if (skipReveal) return;
+                        nameEl.textContent = sorted[1].name;
+                        nameEl.style.animation = 'none';
+                        nameEl.offsetHeight;
+                        nameEl.style.animation = 'slideUp 0.8s ease-out';
+                        scoreEl.textContent = `${sorted[1].score} points`;
+                    }, 600);
+                }, delay);
+                delay += 3500;
+            }
+
+            // Show 1st place (winner!)
+            if (sorted.length >= 1) {
+                revealTimeout = setTimeout(() => {
+                    if (skipReveal) return;
+                    drumrollEl.classList.remove('hidden');
+                    placeEl.textContent = '';
+                    nameEl.textContent = '';
+                    scoreEl.textContent = '';
+                    playDrumroll();
+                }, delay);
+                delay += 2000;
+
+                revealTimeout = setTimeout(() => {
+                    if (skipReveal) return;
+                    drumrollEl.classList.add('hidden');
+                    titleEl.textContent = '🎉 And the WINNER is... 🎉';
+                    playWinnerFanfare();
+                    placeEl.textContent = '🥇';
+                    placeEl.style.animation = 'none';
+                    placeEl.offsetHeight;
+                    placeEl.style.animation = 'bounceIn 0.6s ease-out';
+
+                    setTimeout(() => {
+                        if (skipReveal) return;
+                        nameEl.textContent = sorted[0].name;
+                        nameEl.className = 'reveal-name reveal-winner';
+                        nameEl.style.animation = 'none';
+                        nameEl.offsetHeight;
+                        nameEl.style.animation = 'slideUp 0.8s ease-out';
+                        scoreEl.textContent = `${sorted[0].score} points • ${sorted[0].wins} wins`;
+                        showCelebration();
+                    }, 600);
+                }, delay);
+                delay += 5000;
+            }
+
+            // Show full leaderboard
+            revealTimeout = setTimeout(() => {
+                if (skipReveal) return;
+                showFullLeaderboard();
+            }, delay);
+        }
+
+        function showFullLeaderboard() {
+            document.getElementById('tvReveal').style.display = 'none';
+            document.getElementById('tvFull').style.display = 'block';
+            updateTvLeaderboard();
+        }
+
+        function skipToLeaderboard() {
+            skipReveal = true;
+            if (revealTimeout) clearTimeout(revealTimeout);
+            showFullLeaderboard();
+        }
+
+        document.getElementById('playerName').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') addPlayer();
+        });
+
+        createSnowflakes();
+        loadData();
+    </script>
+</body>
+</html>
