@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Leaderboard - Demeke Family Xmas Games 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0f1419 0%, #1a1f26 100%);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Snowfall */
+        .snowflakes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -50px;
+            font-size: 2rem;
+            opacity: 0.6;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #165B33 0%, #146B3A 30%, #BB2528 70%, #A71E23 100%);
+            padding: 2vh 2vw;
+            text-align: center;
+            border-bottom: 0.5vh solid #F8B229;
+            flex-shrink: 0;
+        }
+
+        .header h1 {
+            font-size: 5vh;
+            font-weight: 700;
+            font-family: 'Mountains of Christmas', cursive;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header-subtitle {
+            font-size: 2.5vh;
+            color: #F8B229;
+            margin-top: 0.5vh;
+        }
+
+        /* Main Content */
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 2vh 3vw;
+            overflow: hidden;
+        }
+
+        /* Leaderboard */
+        .leaderboard {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5vh;
+            overflow-y: auto;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            padding: 2vh 2vw;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 2vh;
+            transition: all 0.3s ease;
+            border: 0.3vh solid transparent;
+            animation: slideIn 0.5s ease-out backwards;
+        }
+
+        .leaderboard-item:nth-child(1) { animation-delay: 0.1s; }
+        .leaderboard-item:nth-child(2) { animation-delay: 0.2s; }
+        .leaderboard-item:nth-child(3) { animation-delay: 0.3s; }
+        .leaderboard-item:nth-child(4) { animation-delay: 0.4s; }
+        .leaderboard-item:nth-child(5) { animation-delay: 0.5s; }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .leaderboard-item.gold {
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 215, 0, 0.05) 100%);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .leaderboard-item.silver {
+            background: linear-gradient(90deg, rgba(192, 192, 192, 0.2) 0%, rgba(192, 192, 192, 0.05) 100%);
+            border-color: rgba(192, 192, 192, 0.5);
+        }
+
+        .leaderboard-item.bronze {
+            background: linear-gradient(90deg, rgba(205, 127, 50, 0.2) 0%, rgba(205, 127, 50, 0.05) 100%);
+            border-color: rgba(205, 127, 50, 0.5);
+        }
+
+        .rank {
+            font-size: 5vh;
+            font-weight: 700;
+            width: 10vh;
+            height: 10vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2vh;
+            flex-shrink: 0;
+        }
+
+        .rank.top {
+            background: rgba(255, 215, 0, 0.2);
+        }
+
+        .player-info {
+            flex: 1;
+            padding: 0 3vw;
+        }
+
+        .player-name {
+            font-size: 4.5vh;
+            font-weight: 700;
+            font-family: 'Mountains of Christmas', cursive;
+        }
+
+        .player-wins {
+            font-size: 2vh;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 0.5vh;
+        }
+
+        .player-score {
+            font-size: 6vh;
+            font-weight: 700;
+            color: #F8B229;
+            text-align: right;
+        }
+
+        .player-score span {
+            font-size: 2.5vh;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Empty State */
+        .empty-state {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .empty-state .icon {
+            font-size: 15vh;
+            margin-bottom: 3vh;
+        }
+
+        .empty-state p {
+            font-size: 3vh;
+            font-family: 'Mountains of Christmas', cursive;
+        }
+
+        /* Last Game Banner */
+        .last-game {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5vh 2vw;
+            border-radius: 1.5vh;
+            margin-bottom: 2vh;
+            border-left: 0.5vh solid #F8B229;
+            flex-shrink: 0;
+        }
+
+        .last-game-title {
+            font-size: 2vh;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 0.5vh;
+        }
+
+        .last-game-content {
+            font-size: 2.5vh;
+            display: flex;
+            gap: 2vw;
+            flex-wrap: wrap;
+        }
+
+        /* Sync indicator */
+        .sync-status {
+            position: fixed;
+            bottom: 2vh;
+            right: 2vw;
+            font-size: 1.5vh;
+            color: rgba(255, 255, 255, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 0.5vw;
+        }
+
+        .sync-dot {
+            width: 1vh;
+            height: 1vh;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Celebration */
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2000;
+            display: none;
+        }
+
+        .celebration.active {
+            display: block;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 1.5vh;
+            height: 1.5vh;
+            animation: confetti-fall 3s ease-out forwards;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-10vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* New score animation */
+        .score-updated {
+            animation: scoreFlash 1s ease-out;
+        }
+
+        @keyframes scoreFlash {
+            0%, 100% { background: inherit; }
+            50% { background: rgba(248, 178, 41, 0.3); }
+        }
+    </style>
+</head>
+<body>
+    <div class="snowflakes" id="snowflakes"></div>
+    <div class="celebration" id="celebration"></div>
+
+    <header class="header">
+        <h1>🏆 Leaderboard 🏆</h1>
+        <p class="header-subtitle">Demeke Family Xmas Games 2025</p>
+    </header>
+
+    <div class="content">
+        <div class="last-game" id="lastGame" style="display: none;">
+            <div class="last-game-title">🎮 Latest Game</div>
+            <div class="last-game-content" id="lastGameContent"></div>
+        </div>
+        <div class="leaderboard" id="leaderboard"></div>
+    </div>
+
+    <div class="sync-status">
+        <div class="sync-dot"></div>
+        <span>Live • Auto-updating</span>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+    <script>
+        // Firebase config - will be set from URL or defaults
+        let firebaseConfig = null;
+        let database = null;
+        let lastGameCount = 0;
+
+        // Check URL for room code
+        const urlParams = new URLSearchParams(window.location.search);
+        const roomCode = urlParams.get('room') || 'demeke2025';
+
+        // Firebase config - set your own config here for cross-device sync
+        // Get config from: Firebase Console > Project Settings > Your apps > Config
+        const FIREBASE_CONFIG = null; // Set to your config object to enable cross-device sync
+
+        let database = null;
+        let useFirebase = false;
+
+        // Try to initialize Firebase if config is provided
+        if (FIREBASE_CONFIG) {
+            try {
+                firebase.initializeApp(FIREBASE_CONFIG);
+                database = firebase.database();
+                useFirebase = true;
+                console.log('Firebase connected - cross-device sync enabled');
+            } catch (e) {
+                console.log('Firebase init failed, using localStorage');
+                useFirebase = false;
+            }
+        }
+
+        // Create snowflakes
+        function createSnowflakes() {
+            const container = document.getElementById('snowflakes');
+            const emojis = ['❄️', '🎄', '⭐', '🎁', '🔔', '❄️', '✨', '🎅', '☃️', '🦌', '❄️', '🍪'];
+            for (let i = 0; i < 20; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.animationDuration = (Math.random() * 6 + 10) + 's';
+                snowflake.style.animationDelay = Math.random() * 10 + 's';
+                snowflake.style.fontSize = (Math.random() * 1.5 + 1.5) + 'rem';
+                container.appendChild(snowflake);
+            }
+        }
+
+        // Show celebration
+        function showCelebration() {
+            const container = document.getElementById('celebration');
+            container.classList.add('active');
+            container.innerHTML = '';
+
+            const colors = ['#e63946', '#2a9d8f', '#f4a261', '#4895ef', '#9b5de5', '#FFD700'];
+
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                container.appendChild(confetti);
+            }
+
+            setTimeout(() => {
+                container.classList.remove('active');
+            }, 3500);
+        }
+
+        // Update leaderboard display
+        function updateLeaderboard(data) {
+            const container = document.getElementById('leaderboard');
+            const lastGameEl = document.getElementById('lastGame');
+            const lastGameContent = document.getElementById('lastGameContent');
+
+            if (!data || !data.players || data.players.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">🎄</div>
+                        <p>Waiting for players...</p>
+                        <p style="font-size: 2vh; margin-top: 1vh; font-family: Inter;">Add players from the admin panel</p>
+                    </div>
+                `;
+                lastGameEl.style.display = 'none';
+                return;
+            }
+
+            const sorted = [...data.players].sort((a, b) => b.score - a.score);
+
+            // Check if new game was added
+            if (data.games && data.games.length > lastGameCount) {
+                if (lastGameCount > 0) {
+                    showCelebration();
+                }
+                lastGameCount = data.games.length;
+            }
+
+            // Show last game
+            if (data.games && data.games.length > 0) {
+                const lastGame = data.games[data.games.length - 1];
+                lastGameEl.style.display = 'block';
+                let placements = [];
+                if (lastGame.first) placements.push(`🥇 ${lastGame.first}`);
+                if (lastGame.second) placements.push(`🥈 ${lastGame.second}`);
+                if (lastGame.third) placements.push(`🥉 ${lastGame.third}`);
+                lastGameContent.innerHTML = `<strong>${lastGame.name}</strong> — ${placements.join(' • ')}`;
+            } else {
+                lastGameEl.style.display = 'none';
+            }
+
+            container.innerHTML = sorted.map((player, index) => {
+                let rankClass = '';
+                let rankIcon = index + 1;
+
+                if (index === 0) { rankClass = 'gold'; rankIcon = '🥇'; }
+                else if (index === 1) { rankClass = 'silver'; rankIcon = '🥈'; }
+                else if (index === 2) { rankClass = 'bronze'; rankIcon = '🥉'; }
+
+                return `
+                    <div class="leaderboard-item ${rankClass}">
+                        <div class="rank ${index < 3 ? 'top' : ''}">${rankIcon}</div>
+                        <div class="player-info">
+                            <div class="player-name">${player.name}</div>
+                            <div class="player-wins">${player.wins} win${player.wins !== 1 ? 's' : ''} • ${player.score} total points</div>
+                        </div>
+                        <div class="player-score">${player.score} <span>pts</span></div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Load data from localStorage
+        function loadFromLocalStorage() {
+            const saved = localStorage.getItem('christmasGames');
+            if (saved) {
+                return JSON.parse(saved);
+            }
+            return { players: [], games: [] };
+        }
+
+        // Start syncing
+        function startSync() {
+            if (useFirebase && database) {
+                // Firebase real-time sync
+                database.ref('rooms/' + roomCode).on('value', (snapshot) => {
+                    const data = snapshot.val();
+                    if (data) {
+                        updateLeaderboard(data);
+                    }
+                });
+                document.querySelector('.sync-status span').textContent = 'Live • Firebase sync';
+            } else {
+                // localStorage polling (same device)
+                updateLeaderboard(loadFromLocalStorage());
+
+                // Poll every 1.5 seconds
+                setInterval(() => {
+                    updateLeaderboard(loadFromLocalStorage());
+                }, 1500);
+
+                // Listen for storage events (works across tabs on same device)
+                window.addEventListener('storage', (e) => {
+                    if (e.key === 'christmasGames') {
+                        updateLeaderboard(loadFromLocalStorage());
+                    }
+                });
+                document.querySelector('.sync-status span').textContent = 'Live • Same-device sync';
+            }
+        }
+
+        // Initialize
+        createSnowflakes();
+        startSync();
+    </script>
+</body>
+</html>
