@@ -335,57 +335,119 @@
             margin-top: 1vh;
         }
 
-        /* Last Game Banner */
-        .last-game {
+        /* Games Carousel */
+        .games-carousel {
             background: #ffffff;
-            padding: 2vh 3vw;
             border-radius: 1.5vh;
             margin-bottom: 2.5vh;
-            border-left: 0.8vh solid #f9a825;
             flex-shrink: 0;
             box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .games-carousel.hidden {
+            display: none;
+        }
+
+        .carousel-header {
+            background: linear-gradient(90deg, #f9a825 0%, #ffc107 100%);
+            padding: 1.2vh 3vw;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .carousel-title {
+            font-size: 2vh;
+            color: #5d4037;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 1vw;
+        }
+
+        .carousel-dots {
+            display: flex;
+            gap: 0.8vw;
+        }
+
+        .carousel-dot {
+            width: 1vh;
+            height: 1vh;
+            border-radius: 50%;
+            background: rgba(93, 64, 55, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            background: #5d4037;
+            width: 2.5vh;
+            border-radius: 0.5vh;
+        }
+
+        .carousel-content {
+            position: relative;
+            height: 10vh;
+            overflow: hidden;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 2vh 3vw;
             display: flex;
             align-items: center;
             gap: 2vw;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.5s ease;
         }
 
-        .last-game-icon {
+        .carousel-slide.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .carousel-slide.prev {
+            transform: translateX(-100%);
+        }
+
+        .carousel-game-icon {
             font-size: 4vh;
             color: #f9a825;
         }
 
-        .last-game-text {
+        .carousel-game-info {
             flex: 1;
         }
 
-        .last-game-title {
-            font-size: 2vh;
-            color: #9e9e9e;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .last-game-content {
+        .carousel-game-name {
             font-size: 2.8vh;
-            color: #424242;
-            margin-top: 0.5vh;
-            font-weight: 500;
+            color: #1a1a2e;
+            font-weight: 600;
         }
 
-        .last-game-content strong {
-            color: #1a1a2e;
+        .carousel-game-results {
+            font-size: 2.2vh;
+            color: #616161;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1vw;
+            margin-top: 0.5vh;
         }
 
         .placement-badge {
             display: inline-flex;
             align-items: center;
-            gap: 0.3vw;
             padding: 0.3vh 0.8vw;
             border-radius: 1vh;
             font-weight: 600;
-            font-size: 2.2vh;
-            margin-left: 1vw;
+            font-size: 2vh;
         }
 
         .placement-badge.gold-badge {
@@ -401,6 +463,11 @@
         .placement-badge.bronze-badge {
             background: #fff3e0;
             color: #e65100;
+        }
+
+        .placement-badge.winners-badge {
+            background: #e8f5e9;
+            color: #2e7d32;
         }
 
         /* Sync indicator */
@@ -594,12 +661,16 @@
     </header>
 
     <div class="content">
-        <div class="last-game" id="lastGame" style="display: none;">
-            <span class="material-icons last-game-icon">sports_esports</span>
-            <div class="last-game-text">
-                <div class="last-game-title">Latest Game</div>
-                <div class="last-game-content" id="lastGameContent"></div>
+        <!-- Games Carousel -->
+        <div class="games-carousel hidden" id="gamesCarousel">
+            <div class="carousel-header">
+                <div class="carousel-title">
+                    <span class="material-icons">sports_esports</span>
+                    Game History
+                </div>
+                <div class="carousel-dots" id="carouselDots"></div>
             </div>
+            <div class="carousel-content" id="carouselContent"></div>
         </div>
         <div class="leaderboard" id="leaderboard"></div>
     </div>
@@ -649,6 +720,9 @@
         // ================================
 
         let lastGameCount = 0;
+        let carouselIndex = 0;
+        let carouselTimer = null;
+        const CAROUSEL_INTERVAL = 4000; // 4 seconds per slide
 
         // Check URL for room code
         const urlParams = new URLSearchParams(window.location.search);
@@ -744,11 +818,94 @@
             }, 4000);
         }
 
+        // Update games carousel
+        function updateCarousel(games) {
+            const carousel = document.getElementById('gamesCarousel');
+            const content = document.getElementById('carouselContent');
+            const dots = document.getElementById('carouselDots');
+
+            if (!games || games.length === 0) {
+                carousel.classList.add('hidden');
+                if (carouselTimer) {
+                    clearInterval(carouselTimer);
+                    carouselTimer = null;
+                }
+                return;
+            }
+
+            carousel.classList.remove('hidden');
+
+            // Show up to last 5 games (most recent first)
+            const recentGames = [...games].reverse().slice(0, 5);
+
+            // Generate slides
+            content.innerHTML = recentGames.map((game, index) => {
+                let resultsHtml = '';
+
+                if (game.type === 'winners' && game.winners) {
+                    // Multiple winners mode
+                    resultsHtml = `<span class="placement-badge winners-badge">Winners: ${game.winners.join(', ')}</span>`;
+                } else {
+                    // Placement mode
+                    if (game.first) resultsHtml += `<span class="placement-badge gold-badge">1st ${game.first}</span>`;
+                    if (game.second) resultsHtml += `<span class="placement-badge silver-badge">2nd ${game.second}</span>`;
+                    if (game.third) resultsHtml += `<span class="placement-badge bronze-badge">3rd ${game.third}</span>`;
+                }
+
+                return `
+                    <div class="carousel-slide ${index === 0 ? 'active' : ''}" data-index="${index}">
+                        <span class="material-icons carousel-game-icon">emoji_events</span>
+                        <div class="carousel-game-info">
+                            <div class="carousel-game-name">${game.name}</div>
+                            <div class="carousel-game-results">${resultsHtml}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Generate dots
+            dots.innerHTML = recentGames.map((_, index) =>
+                `<div class="carousel-dot ${index === 0 ? 'active' : ''}" data-index="${index}"></div>`
+            ).join('');
+
+            // Reset carousel index
+            carouselIndex = 0;
+
+            // Start rotation if more than 1 game
+            if (recentGames.length > 1 && !carouselTimer) {
+                carouselTimer = setInterval(() => {
+                    rotateCarousel(recentGames.length);
+                }, CAROUSEL_INTERVAL);
+            }
+        }
+
+        function rotateCarousel(totalSlides) {
+            const slides = document.querySelectorAll('.carousel-slide');
+            const dots = document.querySelectorAll('.carousel-dot');
+
+            if (slides.length === 0) return;
+
+            // Remove active from current
+            slides[carouselIndex].classList.remove('active');
+            slides[carouselIndex].classList.add('prev');
+            dots[carouselIndex].classList.remove('active');
+
+            // Move to next
+            carouselIndex = (carouselIndex + 1) % totalSlides;
+
+            // Clear prev class from all
+            setTimeout(() => {
+                slides.forEach(s => s.classList.remove('prev'));
+            }, 500);
+
+            // Add active to new
+            slides[carouselIndex].classList.add('active');
+            dots[carouselIndex].classList.add('active');
+        }
+
         // Update leaderboard display
         function updateLeaderboard(data) {
             const container = document.getElementById('leaderboard');
-            const lastGameEl = document.getElementById('lastGame');
-            const lastGameContent = document.getElementById('lastGameContent');
 
             if (!data || !data.players || data.players.length === 0) {
                 container.innerHTML = `
@@ -758,7 +915,7 @@
                         <p class="subtitle">Add players from the admin panel</p>
                     </div>
                 `;
-                lastGameEl.style.display = 'none';
+                updateCarousel([]);
                 return;
             }
 
@@ -772,18 +929,8 @@
                 lastGameCount = data.games.length;
             }
 
-            // Show last game
-            if (data.games && data.games.length > 0) {
-                const lastGame = data.games[data.games.length - 1];
-                lastGameEl.style.display = 'flex';
-                let placements = [];
-                if (lastGame.first) placements.push(`<span class="placement-badge gold-badge">1st ${lastGame.first}</span>`);
-                if (lastGame.second) placements.push(`<span class="placement-badge silver-badge">2nd ${lastGame.second}</span>`);
-                if (lastGame.third) placements.push(`<span class="placement-badge bronze-badge">3rd ${lastGame.third}</span>`);
-                lastGameContent.innerHTML = `<strong>${lastGame.name}</strong> ${placements.join('')}`;
-            } else {
-                lastGameEl.style.display = 'none';
-            }
+            // Update carousel with games
+            updateCarousel(data.games);
 
             container.innerHTML = sorted.map((player, index) => {
                 let rankClass = '';
