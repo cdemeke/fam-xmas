@@ -177,63 +177,83 @@
             box-shadow: 0 5px 20px rgba(205, 127, 50, 0.3);
         }
 
-        /* Medal/Rank Badges - CSS based, no emojis */
-        .rank {
-            width: 10vh;
-            height: 10vh;
+        /* Player Photo with Medal Badge */
+        .player-avatar {
+            width: 12vh;
+            height: 12vh;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .player-photo {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #e0e0e0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .player-avatar.first .player-photo {
+            border-color: #ffd700;
+            box-shadow: 0 4px 20px rgba(255, 193, 7, 0.4);
+        }
+
+        .player-avatar.second .player-photo {
+            border-color: #9e9e9e;
+            box-shadow: 0 4px 20px rgba(158, 158, 158, 0.4);
+        }
+
+        .player-avatar.third .player-photo {
+            border-color: #cd7f32;
+            box-shadow: 0 4px 20px rgba(205, 127, 50, 0.4);
+        }
+
+        /* Medal Badge Overlay */
+        .medal-badge {
+            position: absolute;
+            bottom: -0.5vh;
+            right: -0.5vh;
+            width: 4.5vh;
+            height: 4.5vh;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 2vh;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .medal-badge.gold {
+            background: linear-gradient(145deg, #ffd700 0%, #ffb300 100%);
+            color: #5d4037;
+            border: 3px solid #fff;
+        }
+
+        .medal-badge.silver {
+            background: linear-gradient(145deg, #e0e0e0 0%, #9e9e9e 100%);
+            color: #37474f;
+            border: 3px solid #fff;
+        }
+
+        .medal-badge.bronze {
+            background: linear-gradient(145deg, #ffb74d 0%, #cd7f32 100%);
+            color: #4e342e;
+            border: 3px solid #fff;
+        }
+
+        /* Rank number for non-podium players */
+        .rank-number {
+            width: 12vh;
+            height: 12vh;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
             flex-shrink: 0;
             font-weight: 800;
-            font-size: 4vh;
-            position: relative;
-        }
-
-        .rank.first {
-            background: linear-gradient(145deg, #ffd700 0%, #ffb300 50%, #ff8f00 100%);
-            color: #5d4037;
-            box-shadow: 0 4px 20px rgba(255, 193, 7, 0.5), inset 0 2px 4px rgba(255,255,255,0.4);
-            border: 4px solid #ffc107;
-        }
-
-        .rank.first::after {
-            content: '1ST';
-            font-size: 2vh;
-            position: absolute;
-            bottom: -0.5vh;
-        }
-
-        .rank.second {
-            background: linear-gradient(145deg, #e0e0e0 0%, #bdbdbd 50%, #9e9e9e 100%);
-            color: #37474f;
-            box-shadow: 0 4px 20px rgba(158, 158, 158, 0.5), inset 0 2px 4px rgba(255,255,255,0.4);
-            border: 4px solid #bdbdbd;
-        }
-
-        .rank.second::after {
-            content: '2ND';
-            font-size: 2vh;
-            position: absolute;
-            bottom: -0.5vh;
-        }
-
-        .rank.third {
-            background: linear-gradient(145deg, #ffb74d 0%, #cd7f32 50%, #a1887f 100%);
-            color: #4e342e;
-            box-shadow: 0 4px 20px rgba(205, 127, 50, 0.5), inset 0 2px 4px rgba(255,255,255,0.4);
-            border: 4px solid #cd7f32;
-        }
-
-        .rank.third::after {
-            content: '3RD';
-            font-size: 2vh;
-            position: absolute;
-            bottom: -0.5vh;
-        }
-
-        .rank.other {
+            font-size: 5vh;
             background: linear-gradient(145deg, #f5f5f5 0%, #eeeeee 100%);
             color: #616161;
             border: 3px solid #e0e0e0;
@@ -483,7 +503,7 @@
             Leaderboard
             <span class="material-icons trophy">emoji_events</span>
         </h1>
-        <p class="header-subtitle">Demeke Family Xmas Games 2025</p>
+        <p class="header-subtitle">Xmas Games 2025</p>
     </header>
 
     <div class="content">
@@ -517,14 +537,15 @@
         // Set to false when ready to use real data
         const DEMO_MODE = true;
 
-        // Mock players for demo
+        // Mock players for demo (with placeholder photos)
+        // Photos use UI Avatars API for demo - replace with real photos
         const mockPlayers = [
-            { name: 'Mom', score: 12, wins: 4 },
-            { name: 'Dad', score: 9, wins: 3 },
-            { name: 'Chris', score: 8, wins: 2 },
-            { name: 'Sarah', score: 6, wins: 2 },
-            { name: 'Marcus', score: 5, wins: 1 },
-            { name: 'Grandma', score: 3, wins: 1 },
+            { name: 'Mom', score: 12, wins: 4, photo: 'https://ui-avatars.com/api/?name=Mom&background=e91e63&color=fff&size=200&bold=true' },
+            { name: 'Dad', score: 9, wins: 3, photo: 'https://ui-avatars.com/api/?name=Dad&background=2196f3&color=fff&size=200&bold=true' },
+            { name: 'Chris', score: 8, wins: 2, photo: 'https://ui-avatars.com/api/?name=Chris&background=4caf50&color=fff&size=200&bold=true' },
+            { name: 'Sarah', score: 6, wins: 2, photo: 'https://ui-avatars.com/api/?name=Sarah&background=9c27b0&color=fff&size=200&bold=true' },
+            { name: 'Marcus', score: 5, wins: 1, photo: 'https://ui-avatars.com/api/?name=Marcus&background=ff9800&color=fff&size=200&bold=true' },
+            { name: 'Grandma', score: 3, wins: 1, photo: 'https://ui-avatars.com/api/?name=Grandma&background=795548&color=fff&size=200&bold=true' },
         ];
 
         const mockGames = [
@@ -652,17 +673,50 @@
 
             container.innerHTML = sorted.map((player, index) => {
                 let rankClass = '';
-                let rankDisplay = index + 1;
+                let medalBadgeClass = '';
+                let medalText = '';
+                const rankDisplay = index + 1;
 
-                if (index === 0) { rankClass = 'gold'; }
-                else if (index === 1) { rankClass = 'silver'; }
-                else if (index === 2) { rankClass = 'bronze'; }
+                if (index === 0) {
+                    rankClass = 'gold';
+                    medalBadgeClass = 'gold';
+                    medalText = '1';
+                }
+                else if (index === 1) {
+                    rankClass = 'silver';
+                    medalBadgeClass = 'silver';
+                    medalText = '2';
+                }
+                else if (index === 2) {
+                    rankClass = 'bronze';
+                    medalBadgeClass = 'bronze';
+                    medalText = '3';
+                }
 
-                const medalClass = index === 0 ? 'first' : index === 1 ? 'second' : index === 2 ? 'third' : 'other';
+                const avatarClass = index === 0 ? 'first' : index === 1 ? 'second' : index === 2 ? 'third' : '';
+
+                // Generate avatar HTML - photo with medal badge for top 3, or just rank number
+                let avatarHTML;
+                if (player.photo) {
+                    avatarHTML = `
+                        <div class="player-avatar ${avatarClass}">
+                            <img src="${player.photo}" alt="${player.name}" class="player-photo" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(player.name)}&background=757575&color=fff&size=200'">
+                            ${index < 3 ? `<div class="medal-badge ${medalBadgeClass}">${medalText}</div>` : ''}
+                        </div>
+                    `;
+                } else {
+                    // Fallback: generate avatar from initials
+                    avatarHTML = `
+                        <div class="player-avatar ${avatarClass}">
+                            <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(player.name)}&background=757575&color=fff&size=200" alt="${player.name}" class="player-photo">
+                            ${index < 3 ? `<div class="medal-badge ${medalBadgeClass}">${medalText}</div>` : ''}
+                        </div>
+                    `;
+                }
 
                 return `
                     <div class="leaderboard-item ${rankClass}">
-                        <div class="rank ${medalClass}">${index < 3 ? '' : rankDisplay}</div>
+                        ${avatarHTML}
                         <div class="player-info">
                             <div class="player-name">${player.name}</div>
                             <div class="player-wins">${player.wins} win${player.wins !== 1 ? 's' : ''} - ${player.score} total points</div>
