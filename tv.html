@@ -127,6 +127,18 @@
             gap: 2vh;
             overflow-y: auto;
             padding-right: 1vw;
+            scroll-behavior: smooth;
+        }
+
+        /* Hide scrollbar for cleaner TV look */
+        .leaderboard::-webkit-scrollbar {
+            width: 0;
+            display: none;
+        }
+
+        .leaderboard {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
 
         .leaderboard-item {
@@ -828,9 +840,69 @@
             }
         }
 
+        // Auto-scroll functionality for TV mode
+        let autoScrollTimer = null;
+        let scrollDirection = 1; // 1 = down, -1 = up
+        const SCROLL_DELAY = 5000; // 5 seconds before starting
+        const SCROLL_SPEED = 1; // pixels per frame
+        const PAUSE_AT_ENDS = 3000; // pause at top/bottom
+
+        function startAutoScroll() {
+            const leaderboard = document.getElementById('leaderboard');
+            if (!leaderboard) return;
+
+            let isPaused = false;
+
+            function scroll() {
+                if (isPaused) return;
+
+                const maxScroll = leaderboard.scrollHeight - leaderboard.clientHeight;
+
+                if (maxScroll <= 0) {
+                    // Content fits, no scrolling needed
+                    return;
+                }
+
+                leaderboard.scrollTop += scrollDirection * SCROLL_SPEED;
+
+                // Check if we hit the bottom
+                if (leaderboard.scrollTop >= maxScroll) {
+                    isPaused = true;
+                    setTimeout(() => {
+                        scrollDirection = -1; // Scroll up
+                        isPaused = false;
+                    }, PAUSE_AT_ENDS);
+                }
+
+                // Check if we hit the top
+                if (leaderboard.scrollTop <= 0) {
+                    isPaused = true;
+                    setTimeout(() => {
+                        scrollDirection = 1; // Scroll down
+                        isPaused = false;
+                    }, PAUSE_AT_ENDS);
+                }
+            }
+
+            // Start scrolling after delay
+            setTimeout(() => {
+                autoScrollTimer = setInterval(scroll, 16); // ~60fps
+            }, SCROLL_DELAY);
+        }
+
+        // Reset scroll when leaderboard updates
+        function resetAutoScroll() {
+            const leaderboard = document.getElementById('leaderboard');
+            if (leaderboard) {
+                leaderboard.scrollTop = 0;
+                scrollDirection = 1;
+            }
+        }
+
         // Initialize
         createSnowflakes();
         startSync();
+        startAutoScroll();
     </script>
 </body>
 </html>
