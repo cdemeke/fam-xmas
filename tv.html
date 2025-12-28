@@ -385,9 +385,34 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
     <script>
-        // Firebase config - will be set from URL or defaults
-        let firebaseConfig = null;
-        let database = null;
+        // ========== DEMO MODE ==========
+        // Set to true to show mock data that updates every 10 seconds
+        // Set to false when ready to use real data
+        const DEMO_MODE = true;
+
+        // Mock players for demo
+        const mockPlayers = [
+            { name: 'Mom', score: 12, wins: 4 },
+            { name: 'Dad', score: 9, wins: 3 },
+            { name: 'Chris', score: 8, wins: 2 },
+            { name: 'Sarah', score: 6, wins: 2 },
+            { name: 'Marcus', score: 5, wins: 1 },
+            { name: 'Grandma', score: 3, wins: 1 },
+        ];
+
+        const mockGames = [
+            { name: 'Christmas Trivia', first: 'Mom', second: 'Dad', third: 'Chris' },
+            { name: 'Gift Wrap Race', first: 'Sarah', second: 'Mom', third: 'Marcus' },
+            { name: 'Carol Karaoke', first: 'Dad', second: 'Chris', third: 'Grandma' },
+        ];
+
+        const gameNames = [
+            'Christmas Trivia', 'Gift Wrap Race', 'Carol Karaoke', 'Cookie Decorating',
+            'Snowball Toss', 'Ornament Hunt', 'Holiday Charades', 'Jingle Bell Rock',
+            'Stocking Stuffer', 'Reindeer Games', 'Santa Says', 'Elf on Shelf'
+        ];
+        // ================================
+
         let lastGameCount = 0;
 
         // Check URL for room code
@@ -401,8 +426,8 @@
         let database = null;
         let useFirebase = false;
 
-        // Try to initialize Firebase if config is provided
-        if (FIREBASE_CONFIG) {
+        // Try to initialize Firebase if config is provided (skip in demo mode)
+        if (!DEMO_MODE && FIREBASE_CONFIG) {
             try {
                 firebase.initializeApp(FIREBASE_CONFIG);
                 database = firebase.database();
@@ -524,8 +549,51 @@
             return { players: [], games: [] };
         }
 
+        // Demo mode - simulate a new game
+        function simulateGame() {
+            // Pick random winners (3 different players)
+            const shuffled = [...mockPlayers].sort(() => Math.random() - 0.5);
+            const first = shuffled[0];
+            const second = shuffled[1];
+            const third = shuffled[2];
+
+            // Award points
+            first.score += 3;
+            first.wins += 1;
+            second.score += 2;
+            third.score += 1;
+
+            // Add to game history
+            const gameName = gameNames[Math.floor(Math.random() * gameNames.length)];
+            mockGames.push({
+                name: gameName,
+                first: first.name,
+                second: second.name,
+                third: third.name
+            });
+
+            return { players: mockPlayers, games: mockGames };
+        }
+
         // Start syncing
         function startSync() {
+            // DEMO MODE - show mock data with updates every 10 seconds
+            if (DEMO_MODE) {
+                console.log('Demo mode active - scores update every 10 seconds');
+
+                // Initial display
+                updateLeaderboard({ players: mockPlayers, games: mockGames });
+                document.querySelector('.sync-status span').textContent = 'Demo Mode • Updates every 10s';
+
+                // Simulate a new game every 10 seconds
+                setInterval(() => {
+                    const data = simulateGame();
+                    updateLeaderboard(data);
+                }, 10000);
+
+                return;
+            }
+
             if (useFirebase && database) {
                 // Firebase real-time sync
                 database.ref('rooms/' + roomCode).on('value', (snapshot) => {
