@@ -692,8 +692,8 @@
     <script>
         // ========== DEMO MODE ==========
         // Set to true to show mock data that updates every 10 seconds
-        // Set to false when ready to use real data
-        const DEMO_MODE = true;
+        // Set to false to use real data from localStorage or Firebase
+        const DEMO_MODE = false;
 
         // Mock players for demo (with placeholder photos)
         // Photos use UI Avatars API for demo - replace with real photos
@@ -724,12 +724,33 @@
         let carouselTimer = null;
         const CAROUSEL_INTERVAL = 4000; // 4 seconds per slide
 
-        // Check URL for room code
-        const urlParams = new URLSearchParams(window.location.search);
-        const roomCode = urlParams.get('room') || 'demeke2025';
+        // ========== FIREBASE CONFIGURATION ==========
+        // IMPORTANT: Copy the same config from index.html to enable sync!
+        // To enable Firebase sync across devices:
+        // 1. Go to https://console.firebase.google.com
+        // 2. Create a project (or use existing)
+        // 3. Add a Web App and copy the config below
+        // 4. Enable Realtime Database in test mode
+        //
+        // Replace null with your Firebase config object:
+        const FIREBASE_CONFIG = {
+            apiKey: "AIzaSyDx9pexti7q0SsE65y6Z_kUrmOaEIilal0",
+            authDomain: "xmas-d7da1.firebaseapp.com",
+            databaseURL: "https://xmas-d7da1-default-rtdb.firebaseio.com",
+            projectId: "xmas-d7da1",
+            storageBucket: "xmas-d7da1.firebasestorage.app",
+            messagingSenderId: "697842146616",
+            appId: "1:697842146616:web:ec0a3659970aa47e6bf5cd",
+            measurementId: "G-42DZW7YFWX"
+        };
 
-        // Firebase config - set your own config here for cross-device sync
-        const FIREBASE_CONFIG = null;
+        // Room code - must match the admin page!
+        const ROOM_CODE = 'demeke2025'; // Change this for different game rooms
+        // =============================================
+
+        // Check URL for room code override
+        const urlParams = new URLSearchParams(window.location.search);
+        const roomCode = urlParams.get('room') || ROOM_CODE;
 
         let database = null;
         let useFirebase = false;

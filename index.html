@@ -902,6 +902,9 @@
             }
         }
     </style>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 </head>
 <body>
     <div class="snowflakes" id="snowflakes"></div>
@@ -995,12 +998,14 @@
                     <h2>Players</h2>
                 </div>
                 <div class="form-group">
-                    <label>Add new player</label>
-                    <div class="input-row">
-                        <input type="text" id="playerName" placeholder="Enter name...">
-                        <button class="btn" onclick="addPlayer()">Add</button>
-                    </div>
+                    <label>Player name</label>
+                    <input type="text" id="playerName" placeholder="Enter name...">
                 </div>
+                <div class="form-group">
+                    <label>Photo URL (optional)</label>
+                    <input type="url" id="playerPhoto" placeholder="https://example.com/photo.jpg">
+                </div>
+                <button class="btn" onclick="addPlayer()" style="width: 100%;">Add Player</button>
                 <div class="player-grid" id="playerList"></div>
             </div>
 
@@ -1103,6 +1108,44 @@
     </div>
 
     <script>
+        // ========== FIREBASE CONFIGURATION ==========
+        // To enable Firebase sync across devices:
+        // 1. Go to https://console.firebase.google.com
+        // 2. Create a project (or use existing)
+        // 3. Add a Web App and copy the config below
+        // 4. Enable Realtime Database in test mode
+        //
+        // Replace null with your Firebase config object:
+        const FIREBASE_CONFIG = {
+            apiKey: "AIzaSyDx9pexti7q0SsE65y6Z_kUrmOaEIilal0",
+            authDomain: "xmas-d7da1.firebaseapp.com",
+            databaseURL: "https://xmas-d7da1-default-rtdb.firebaseio.com",
+            projectId: "xmas-d7da1",
+            storageBucket: "xmas-d7da1.firebasestorage.app",
+            messagingSenderId: "697842146616",
+            appId: "1:697842146616:web:ec0a3659970aa47e6bf5cd",
+            measurementId: "G-42DZW7YFWX"
+        };
+
+        const ROOM_CODE = 'demeke2025'; // Change this for different game rooms
+        // =============================================
+
+        let database = null;
+        let useFirebase = false;
+
+        // Initialize Firebase if configured
+        if (FIREBASE_CONFIG) {
+            try {
+                firebase.initializeApp(FIREBASE_CONFIG);
+                database = firebase.database();
+                useFirebase = true;
+                console.log('Firebase connected - cross-device sync enabled');
+            } catch (e) {
+                console.error('Firebase init failed:', e);
+                useFirebase = false;
+            }
+        }
+
         let gameData = {
             players: [],
             games: [],
@@ -1189,15 +1232,50 @@
         }
 
         function loadData() {
-            const saved = localStorage.getItem('christmasGames');
-            if (saved) {
-                gameData = JSON.parse(saved);
+            if (useFirebase && database) {
+                // Load from Firebase and listen for changes
+                database.ref('rooms/' + ROOM_CODE).on('value', (snapshot) => {
+                    const data = snapshot.val();
+                    if (data) {
+                        gameData.players = data.players || [];
+                        gameData.games = data.games || [];
+                        // Keep local PIN
+                        const savedPin = localStorage.getItem('gamePin');
+                        if (savedPin) gameData.pin = savedPin;
+                    }
+                    updateUI();
+                });
+                console.log('Listening for Firebase updates...');
+            } else {
+                // Load from localStorage
+                const saved = localStorage.getItem('christmasGames');
+                if (saved) {
+                    gameData = JSON.parse(saved);
+                }
+                updateUI();
             }
-            updateUI();
         }
 
         function saveData() {
-            localStorage.setItem('christmasGames', JSON.stringify(gameData));
+            // Always save PIN locally
+            localStorage.setItem('gamePin', gameData.pin);
+
+            if (useFirebase && database) {
+                // Save to Firebase (excluding PIN)
+                database.ref('rooms/' + ROOM_CODE).set({
+                    players: gameData.players,
+                    games: gameData.games
+                }).then(() => {
+                    console.log('Saved to Firebase');
+                }).catch((error) => {
+                    console.error('Firebase save error:', error);
+                    // Fallback to localStorage
+                    localStorage.setItem('christmasGames', JSON.stringify(gameData));
+                });
+            } else {
+                // Save to localStorage
+                localStorage.setItem('christmasGames', JSON.stringify(gameData));
+            }
         }
 
         function createSnowflakes() {
@@ -1333,6 +1411,7 @@
 
         function addPlayer() {
             const name = document.getElementById('playerName').value.trim();
+            const photo = document.getElementById('playerPhoto').value.trim();
             if (!name) return;
 
             if (gameData.players.find(p => p.name.toLowerCase() === name.toLowerCase())) {
@@ -1342,11 +1421,13 @@
 
             gameData.players.push({
                 name: name,
+                photo: photo || null,
                 score: 0,
                 wins: 0
             });
 
             document.getElementById('playerName').value = '';
+            document.getElementById('playerPhoto').value = '';
             saveData();
             updateUI();
             playSound('click');
@@ -1576,14 +1657,19 @@
                 return;
             }
 
-            container.innerHTML = gameData.players.map(player => `
-                <div class="player-card">
-                    <button class="delete-btn" onclick="deletePlayer('${player.name}')">✕</button>
-                    <div class="avatar">${player.name.charAt(0).toUpperCase()}</div>
-                    <div class="name">${player.name}</div>
-                    <div class="score">${player.score} pts</div>
-                </div>
-            `).join('');
+            container.innerHTML = gameData.players.map(player => {
+                const avatarContent = player.photo
+                    ? `<img src="${player.photo}" alt="${player.name}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" onerror="this.parentElement.innerHTML='${player.name.charAt(0).toUpperCase()}'">`
+                    : player.name.charAt(0).toUpperCase();
+                return `
+                    <div class="player-card">
+                        <button class="delete-btn" onclick="deletePlayer('${player.name}')">✕</button>
+                        <div class="avatar">${avatarContent}</div>
+                        <div class="name">${player.name}</div>
+                        <div class="score">${player.score} pts</div>
+                    </div>
+                `;
+            }).join('');
         }
 
         function updatePlayerSelects() {
