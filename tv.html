@@ -866,6 +866,11 @@
                 if (game.type === 'winners' && game.winners) {
                     // Multiple winners mode
                     resultsHtml = `<span class="placement-badge winners-badge">Winners: ${game.winners.join(', ')}</span>`;
+                } else if (game.type === 'manual' && game.scores) {
+                    // Manual points mode
+                    resultsHtml = game.scores.map(s =>
+                        `<span class="placement-badge winners-badge">${s.name}: ${s.points}pts</span>`
+                    ).join('');
                 } else {
                     // Placement mode
                     if (game.first) resultsHtml += `<span class="placement-badge gold-badge">1st ${game.first}</span>`;
