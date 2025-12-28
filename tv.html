@@ -452,16 +452,91 @@
             position: absolute;
             width: 2vh;
             height: 2vh;
-            animation: confetti-fall 3s ease-out forwards;
         }
 
-        @keyframes confetti-fall {
+        /* Confetti from top */
+        .confetti.from-top {
+            animation: confetti-from-top 3s ease-out forwards;
+        }
+
+        @keyframes confetti-from-top {
             0% {
                 transform: translateY(-10vh) rotate(0deg);
                 opacity: 1;
             }
             100% {
-                transform: translateY(110vh) rotate(720deg);
+                transform: translateY(60vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Confetti from bottom */
+        .confetti.from-bottom {
+            animation: confetti-from-bottom 2.5s ease-out forwards;
+        }
+
+        @keyframes confetti-from-bottom {
+            0% {
+                transform: translateY(110vh) rotate(0deg);
+                opacity: 1;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(30vh) rotate(-540deg);
+                opacity: 0;
+            }
+        }
+
+        /* Confetti from left */
+        .confetti.from-left {
+            animation: confetti-from-left 2.8s ease-out forwards;
+        }
+
+        @keyframes confetti-from-left {
+            0% {
+                transform: translateX(-10vw) translateY(50vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(60vw) translateY(70vh) rotate(540deg);
+                opacity: 0;
+            }
+        }
+
+        /* Confetti from right */
+        .confetti.from-right {
+            animation: confetti-from-right 2.8s ease-out forwards;
+        }
+
+        @keyframes confetti-from-right {
+            0% {
+                transform: translateX(110vw) translateY(50vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(40vw) translateY(70vh) rotate(-540deg);
+                opacity: 0;
+            }
+        }
+
+        /* Center burst */
+        .confetti.from-center {
+            animation: confetti-from-center 2.5s ease-out forwards;
+        }
+
+        @keyframes confetti-from-center {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            30% {
+                transform: scale(1.5) rotate(180deg);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1) translateY(40vh) rotate(720deg);
                 opacity: 0;
             }
         }
@@ -619,27 +694,54 @@
             }
         }
 
-        // Show celebration
+        // Show celebration with confetti from all directions
         function showCelebration() {
             const container = document.getElementById('celebration');
             container.classList.add('active');
             container.innerHTML = '';
 
-            const colors = ['#c62828', '#2e7d32', '#f9a825', '#1565c0', '#6a1b9a', '#ffd700'];
+            const colors = ['#c62828', '#2e7d32', '#f9a825', '#1565c0', '#6a1b9a', '#ffd700', '#e91e63', '#00bcd4'];
+            const directions = ['from-top', 'from-bottom', 'from-left', 'from-right', 'from-center'];
 
-            for (let i = 0; i < 100; i++) {
+            // Create confetti from all directions
+            for (let i = 0; i < 150; i++) {
                 const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.left = Math.random() * 100 + '%';
+                const direction = directions[Math.floor(Math.random() * directions.length)];
+                confetti.className = 'confetti ' + direction;
+
+                // Position based on direction
+                if (direction === 'from-top') {
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = '-5vh';
+                } else if (direction === 'from-bottom') {
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.bottom = '-5vh';
+                } else if (direction === 'from-left') {
+                    confetti.style.left = '-5vw';
+                    confetti.style.top = (Math.random() * 60 + 20) + '%';
+                } else if (direction === 'from-right') {
+                    confetti.style.right = '-5vw';
+                    confetti.style.top = (Math.random() * 60 + 20) + '%';
+                } else if (direction === 'from-center') {
+                    confetti.style.left = (40 + Math.random() * 20) + '%';
+                    confetti.style.top = (40 + Math.random() * 20) + '%';
+                }
+
                 confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                confetti.style.animationDelay = Math.random() * 0.8 + 's';
                 confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '4px';
+
+                // Vary sizes
+                const size = Math.random() * 1.5 + 1;
+                confetti.style.width = size + 'vh';
+                confetti.style.height = size + 'vh';
+
                 container.appendChild(confetti);
             }
 
             setTimeout(() => {
                 container.classList.remove('active');
-            }, 3500);
+            }, 4000);
         }
 
         // Update leaderboard display
