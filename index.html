@@ -764,6 +764,80 @@
             }
         }
 
+        /* Game Type Selector */
+        .game-type-selector {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .type-btn {
+            flex: 1;
+            min-width: 140px;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            background: #f8f9fa;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .type-btn:hover {
+            border-color: var(--accent-gold);
+            background: #fff;
+        }
+
+        .type-btn.active {
+            border-color: var(--accent-gold);
+            background: linear-gradient(135deg, rgba(217, 119, 6, 0.1) 0%, rgba(217, 119, 6, 0.05) 100%);
+            color: var(--text-primary);
+        }
+
+        /* Winners Checklist */
+        .winners-checklist {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .winner-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            background: #f8f9fa;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .winner-checkbox:hover {
+            background: #f1f5f9;
+            border-color: var(--accent-green);
+        }
+
+        .winner-checkbox.selected {
+            background: linear-gradient(135deg, rgba(5, 150, 105, 0.1) 0%, rgba(5, 150, 105, 0.05) 100%);
+            border-color: var(--accent-green);
+        }
+
+        .winner-checkbox input {
+            width: auto;
+            margin: 0;
+            accent-color: var(--accent-green);
+        }
+
+        .winner-checkbox .name {
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
         /* Empty State */
         .empty-state {
             text-align: center;
@@ -939,24 +1013,50 @@
                     <label>Game name</label>
                     <input type="text" id="gameName" placeholder="e.g., Christmas Trivia">
                 </div>
+
+                <!-- Game Type Selector -->
                 <div class="form-group">
-                    <label>1st Place — 3 points</label>
-                    <select id="firstPlace">
-                        <option value="">Select player...</option>
-                    </select>
+                    <label>Scoring Type</label>
+                    <div class="game-type-selector">
+                        <button type="button" class="type-btn active" onclick="setGameType('placement')" id="typePlacement">
+                            🏆 Placement (1st, 2nd, 3rd)
+                        </button>
+                        <button type="button" class="type-btn" onclick="setGameType('winners')" id="typeWinners">
+                            ⭐ Multiple Winners (1pt each)
+                        </button>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>2nd Place — 2 points</label>
-                    <select id="secondPlace">
-                        <option value="">Select player...</option>
-                    </select>
+
+                <!-- Placement Mode (default) -->
+                <div id="placementMode">
+                    <div class="form-group">
+                        <label>1st Place — 3 points</label>
+                        <select id="firstPlace">
+                            <option value="">Select player...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>2nd Place — 2 points</label>
+                        <select id="secondPlace">
+                            <option value="">Select player...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>3rd Place — 1 point</label>
+                        <select id="thirdPlace">
+                            <option value="">Select player...</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>3rd Place — 1 point</label>
-                    <select id="thirdPlace">
-                        <option value="">Select player...</option>
-                    </select>
+
+                <!-- Multiple Winners Mode -->
+                <div id="winnersMode" style="display: none;">
+                    <div class="form-group">
+                        <label>Select all winners (each gets 1 point)</label>
+                        <div class="winners-checklist" id="winnersChecklist"></div>
+                    </div>
                 </div>
+
                 <button class="btn btn-primary" onclick="recordGame()" style="width: 100%;">Record Game</button>
             </div>
 
@@ -1011,6 +1111,50 @@
 
         let isAdmin = false;
         let audioContext;
+        let currentGameType = 'placement'; // 'placement' or 'winners'
+
+        function setGameType(type) {
+            currentGameType = type;
+
+            // Update button states
+            document.getElementById('typePlacement').classList.toggle('active', type === 'placement');
+            document.getElementById('typeWinners').classList.toggle('active', type === 'winners');
+
+            // Show/hide appropriate mode
+            document.getElementById('placementMode').style.display = type === 'placement' ? 'block' : 'none';
+            document.getElementById('winnersMode').style.display = type === 'winners' ? 'block' : 'none';
+
+            // Update winners checklist if switching to winners mode
+            if (type === 'winners') {
+                updateWinnersChecklist();
+            }
+
+            playSound('click');
+        }
+
+        function updateWinnersChecklist() {
+            const container = document.getElementById('winnersChecklist');
+
+            if (gameData.players.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-secondary); padding: 1rem;">No players added yet</p>';
+                return;
+            }
+
+            container.innerHTML = gameData.players.map(player => `
+                <label class="winner-checkbox" onclick="toggleWinnerCheckbox(this)">
+                    <input type="checkbox" value="${player.name}">
+                    <span class="name">${player.name}</span>
+                </label>
+            `).join('');
+        }
+
+        function toggleWinnerCheckbox(label) {
+            const checkbox = label.querySelector('input');
+            // Toggle will happen naturally, just update styling
+            setTimeout(() => {
+                label.classList.toggle('selected', checkbox.checked);
+            }, 0);
+        }
 
         function initAudio() {
             if (!audioContext) {
@@ -1217,54 +1361,92 @@
 
         function recordGame() {
             const gameName = document.getElementById('gameName').value.trim();
-            const first = document.getElementById('firstPlace').value;
-            const second = document.getElementById('secondPlace').value;
-            const third = document.getElementById('thirdPlace').value;
 
             if (!gameName) {
                 alert('Please enter a game name');
                 return;
             }
 
-            if (!first) {
-                alert('Please select at least 1st place');
-                return;
-            }
+            if (currentGameType === 'placement') {
+                // Standard placement mode (1st, 2nd, 3rd)
+                const first = document.getElementById('firstPlace').value;
+                const second = document.getElementById('secondPlace').value;
+                const third = document.getElementById('thirdPlace').value;
 
-            const selected = [first, second, third].filter(Boolean);
-            if (new Set(selected).size !== selected.length) {
-                alert('Each player can only have one placement!');
-                return;
-            }
-
-            if (first) {
-                const player = gameData.players.find(p => p.name === first);
-                if (player) {
-                    player.score += 3;
-                    player.wins += 1;
+                if (!first) {
+                    alert('Please select at least 1st place');
+                    return;
                 }
-            }
-            if (second) {
-                const player = gameData.players.find(p => p.name === second);
-                if (player) player.score += 2;
-            }
-            if (third) {
-                const player = gameData.players.find(p => p.name === third);
-                if (player) player.score += 1;
-            }
 
-            gameData.games.push({
-                name: gameName,
-                first: first,
-                second: second || null,
-                third: third || null,
-                timestamp: new Date().toISOString()
-            });
+                const selected = [first, second, third].filter(Boolean);
+                if (new Set(selected).size !== selected.length) {
+                    alert('Each player can only have one placement!');
+                    return;
+                }
+
+                if (first) {
+                    const player = gameData.players.find(p => p.name === first);
+                    if (player) {
+                        player.score += 3;
+                        player.wins += 1;
+                    }
+                }
+                if (second) {
+                    const player = gameData.players.find(p => p.name === second);
+                    if (player) player.score += 2;
+                }
+                if (third) {
+                    const player = gameData.players.find(p => p.name === third);
+                    if (player) player.score += 1;
+                }
+
+                gameData.games.push({
+                    name: gameName,
+                    type: 'placement',
+                    first: first,
+                    second: second || null,
+                    third: third || null,
+                    timestamp: new Date().toISOString()
+                });
+
+                document.getElementById('firstPlace').value = '';
+                document.getElementById('secondPlace').value = '';
+                document.getElementById('thirdPlace').value = '';
+
+            } else {
+                // Multiple winners mode (1 point each)
+                const checkboxes = document.querySelectorAll('#winnersChecklist input:checked');
+                const winners = Array.from(checkboxes).map(cb => cb.value);
+
+                if (winners.length === 0) {
+                    alert('Please select at least one winner');
+                    return;
+                }
+
+                // Award 1 point to each winner
+                winners.forEach(name => {
+                    const player = gameData.players.find(p => p.name === name);
+                    if (player) {
+                        player.score += 1;
+                        player.wins += 1;
+                    }
+                });
+
+                gameData.games.push({
+                    name: gameName,
+                    type: 'winners',
+                    winners: winners,
+                    timestamp: new Date().toISOString()
+                });
+
+                // Clear checkboxes
+                checkboxes.forEach(cb => {
+                    cb.checked = false;
+                    cb.closest('.winner-checkbox').classList.remove('selected');
+                });
+            }
 
             document.getElementById('gameName').value = '';
-            document.getElementById('firstPlace').value = '';
-            document.getElementById('secondPlace').value = '';
-            document.getElementById('thirdPlace').value = '';
 
             saveData();
             updateUI();
@@ -1436,15 +1618,24 @@
                 const date = new Date(game.timestamp);
                 const timeStr = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-                let placements = [];
-                if (game.first) placements.push(`🥇 ${game.first}`);
-                if (game.second) placements.push(`🥈 ${game.second}`);
-                if (game.third) placements.push(`🥉 ${game.third}`);
+                let placementsHtml = '';
+
+                if (game.type === 'winners' && game.winners) {
+                    // Multiple winners mode
+                    placementsHtml = `⭐ ${game.winners.join(', ')} (1pt each)`;
+                } else {
+                    // Standard placement mode (or legacy games without type)
+                    let placements = [];
+                    if (game.first) placements.push(`🥇 ${game.first}`);
+                    if (game.second) placements.push(`🥈 ${game.second}`);
+                    if (game.third) placements.push(`🥉 ${game.third}`);
+                    placementsHtml = placements.join(' · ');
+                }
 
                 return `
                     <div class="history-item">
                         <div class="game-name">${game.name}</div>
-                        <div class="placements">${placements.join(' · ')}</div>
+                        <div class="placements">${placementsHtml}</div>
                         <div class="timestamp">${timeStr}</div>
                     </div>
                 `;
